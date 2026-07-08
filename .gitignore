@@ -1,5 +1,11 @@
-# Docker volumes — 数据库文件不入库
+# Docker runtime
 docker/mysql_data/
+
+# setup.sh 自动生成的数据副本，不入库
+sql/data/
+
+# Claude / IDE
+.claude/
 
 # IDE
 .idea/

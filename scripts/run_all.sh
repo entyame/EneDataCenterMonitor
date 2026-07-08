@@ -10,7 +10,7 @@ set -e
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SQL_DIR="$PROJECT_ROOT/sql"
-MYSQL_CMD="docker exec -i ene_dc_monitor_mysql mysql -u root -proot123456 ene_datacenter"
+MYSQL_EXEC="docker exec -i ene_dc_monitor_mysql mysql -h 127.0.0.1 -u root -proot123456"
 
 echo "=============================================="
 echo "  全量执行数据加工流程"
@@ -25,7 +25,7 @@ do
     echo ""
     echo "▶ 执行: $sql_file"
     echo "----------------------------------------------"
-    $MYSQL_CMD < "$SQL_DIR/$sql_file"
+    $MYSQL_EXEC ene_datacenter < "$SQL_DIR/$sql_file"
     echo "✓ 完成: $sql_file"
 done
 

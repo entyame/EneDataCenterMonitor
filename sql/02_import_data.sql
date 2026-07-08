@@ -21,7 +21,7 @@ TRUNCATE TABLE fact_disk_tsar;
 -- 2.1 导入主机维度表
 -- 文件：host_detail.dat  (21行含表头, Tab分隔, UTF-8)
 -- ----------------------------------------------------------
-LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/data/host_detail.dat'
+LOAD DATA INFILE '/docker-entrypoint-initdb.d/data/host_detail.dat'
 INTO TABLE dim_host
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY '\t'
@@ -37,7 +37,7 @@ SELECT CONCAT('dim_host: ', COUNT(*), ' rows imported') AS check_result FROM dim
 -- 2.2 导入指标字典维度表
 -- 文件：mod_detail.dat  (56行含表头, Tab分隔, UTF-8)
 -- ----------------------------------------------------------
-LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/data/mod_detail.dat'
+LOAD DATA INFILE '/docker-entrypoint-initdb.d/data/mod_detail.dat'
 INTO TABLE dim_mod
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY '\t'
@@ -53,7 +53,7 @@ SELECT CONCAT('dim_mod: ', COUNT(*), ' rows imported') AS check_result FROM dim_
 -- 2.3 导入性能监控事实表
 -- 文件：pref_tsar.dat  (67201行含表头, Tab分隔)
 -- ----------------------------------------------------------
-LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/data/pref_tsar.dat'
+LOAD DATA INFILE '/docker-entrypoint-initdb.d/data/pref_tsar.dat'
 INTO TABLE fact_pref_tsar
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY '\t'
@@ -69,7 +69,7 @@ SELECT CONCAT('fact_pref_tsar: ', COUNT(*), ' rows imported') AS check_result FR
 -- 2.4 导入磁盘监控事实表
 -- 文件：disk_tsar.dat  (12001行含表头, Tab分隔)
 -- ----------------------------------------------------------
-LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/data/disk_tsar.dat'
+LOAD DATA INFILE '/docker-entrypoint-initdb.d/data/disk_tsar.dat'
 INTO TABLE fact_disk_tsar
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY '\t'
