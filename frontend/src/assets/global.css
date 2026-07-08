@@ -1,0 +1,218 @@
+/* ============================================================
+   Global Styles — 科技感 HUD 大屏主题
+   设计：深色背景 + 紫色主色调 + 金色/绿色点缀
+   ============================================================ */
+
+:root {
+  --bg-deep: #0a0a1a;
+  --bg-panel: rgba(10, 12, 40, 0.75);
+  --bg-panel-hover: rgba(14, 16, 50, 0.82);
+
+  --primary: #7c3aed;
+  --primary-glow: rgba(124, 58, 237, 0.45);
+  --accent-gold: #f59e0b;
+  --accent-gold-glow: rgba(245, 158, 11, 0.4);
+  --accent-green: #10b981;
+  --accent-green-glow: rgba(16, 185, 129, 0.4);
+  --accent-cyan: #06b6d4;
+  --accent-red: #ef4444;
+
+  --border-dim: rgba(124, 58, 237, 0.18);
+  --border-glow: rgba(124, 58, 237, 0.5);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+
+  --font-mono: 'Courier New', 'Consolas', monospace;
+  --glass-blur: 12px;
+  --radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-deep);
+}
+
+/* ---- 网格背景 ---- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridDrift 20s linear infinite;
+}
+
+@keyframes gridDrift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 60px 60px, 60px 60px; }
+}
+
+/* ---- 扫描线 ---- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- 粒子容器 ---- */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Glass Panel — 半透明玻璃面板
+   ============================================================ */
+.glass-panel {
+  position: relative;
+  background: var(--bg-panel);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* HUD 四角切割边框 */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: var(--radius);
+  padding: 2px;
+  background: linear-gradient(135deg,
+    rgba(124, 58, 237, 0.35) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(124, 58, 237, 0.2) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* 角标 */
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  top: 8px; left: 8px;
+  width: 14px; height: 14px;
+  border-left: 2px solid var(--primary);
+  border-top: 2px solid var(--primary);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.glass-panel .corner-br {
+  position: absolute;
+  bottom: 8px; right: 8px;
+  width: 14px; height: 14px;
+  border-right: 2px solid var(--primary);
+  border-bottom: 2px solid var(--primary);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ---- 面板标题 ---- */
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--border-dim);
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.12) 0%, transparent 100%);
+}
+.panel-title::before {
+  content: '◆';
+  font-size: 8px;
+  color: var(--accent-cyan);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ---- Panel Body ---- */
+.panel-body {
+  padding: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- 数值动画 ---- */
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #fff;
+  text-shadow: 0 0 12px var(--primary-glow);
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+.stat-unit {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-left: 2px;
+}
+
+/* ---- 告警闪烁 ---- */
+@keyframes alert-blink {
+  0%, 100% { border-left-color: var(--accent-red); }
+  50% { border-left-color: transparent; }
+}
+.alert-row {
+  animation: alert-blink 1.5s ease-in-out infinite;
+}
+
+/* ---- 滚动条 ---- */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.3);
+  border-radius: 2px;
+}
