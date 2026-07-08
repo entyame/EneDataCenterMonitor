@@ -17,12 +17,12 @@ async function load() {
     const xData = res.data.map(d => `${d.ts_hour}:00`)
     chart.setOption({
       tooltip: { trigger: 'axis' },
-      legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 10 },
+      legend: { bottom: -6, textStyle: { color: '#94a3b8', fontSize: 9 },
         data: ['已用', '空闲', '缓冲', '缓存', '交换'] },
-      grid: { left: 8, right: 8, top: 8, bottom: 28, containLabel: true },
-      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 9 },
+      grid: { left: 6, right: 6, top: 6, bottom: 40, containLabel: true },
+      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 8, interval: 3 },
         axisLine: { lineStyle: { color: 'rgba(124,58,237,0.3)' } } },
-      yAxis: { type: 'value', axisLabel: { color: '#94a3b8', fontSize: 9, formatter: v => (v/1024).toFixed(0)+'G' },
+      yAxis: { type: 'value', axisLabel: { color: '#94a3b8', fontSize: 8, formatter: v => (v/1024).toFixed(0)+'G' },
         splitLine: { lineStyle: { color: 'rgba(124,58,237,0.08)' } } },
       series: [
         { name: '已用', type: 'line', stack: 'mem', data: res.data.map(d => d.mem_used_avg), smooth: true, lineStyle: { color: '#ef4444', width: 1.2 }, areaStyle: { color: 'rgba(239,68,68,0.25)' }, symbol: 'none' },

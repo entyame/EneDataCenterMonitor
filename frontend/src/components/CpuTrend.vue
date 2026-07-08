@@ -17,7 +17,7 @@ async function load() {
     const xData = res.data.map(d => `${d.ts_hour}:00`)
     chart.setOption({
       tooltip: { trigger: 'axis' },
-      legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 10 },
+      legend: { bottom: -4, textStyle: { color: '#94a3b8', fontSize: 10 },
         data: ['user', 'sys', 'wait', 'usage', 'idle'] },
       grid: { left: 8, right: 8, top: 8, bottom: 28, containLabel: true },
       xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 9 },

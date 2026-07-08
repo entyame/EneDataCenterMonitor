@@ -14,14 +14,17 @@ async function load() {
   try {
     const res = await fetchRooms()
     if (!res.success || !res.data.length) return
-    const data = res.data.map(r => ({ name: r.room, value: r.host_count }))
+    const data = res.data.map(r => ({
+      name: r.room.replace('机房', ''),
+      value: r.host_count
+    }))
     chart.setOption({
-      tooltip: { trigger: 'item', formatter: '{b}: {c} 台 ({d}%)' },
-      legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 10 } },
+      tooltip: { trigger: 'item', formatter: '{b}机房: {c} 台 ({d}%)' },
+      legend: { bottom: 2, textStyle: { color: '#94a3b8', fontSize: 10 } },
       series: [{
-        type: 'pie', radius: ['50%', '72%'], center: ['50%', '45%'],
+        type: 'pie', radius: ['48%', '70%'], center: ['50%', '46%'],
         data,
-        label: { color: '#e2e8f0', fontSize: 11, formatter: '{b}\n{d}%' },
+        label: { color: '#e2e8f0', fontSize: 10, formatter: '{b}\n{d}%' },
         labelLine: { lineStyle: { color: 'rgba(124,58,237,0.3)' } },
         itemStyle: {
           borderRadius: 3,

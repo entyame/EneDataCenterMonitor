@@ -17,12 +17,12 @@ async function load() {
     const xData = res.data.map(d => `${d.ts_hour}:00`)
     chart.setOption({
       tooltip: { trigger: 'axis' },
-      legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 10 },
+      legend: { bottom: -6, textStyle: { color: '#94a3b8', fontSize: 9 },
         data: ['1min', '5min', '15min'] },
-      grid: { left: 8, right: 8, top: 8, bottom: 28, containLabel: true },
-      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 9 },
+      grid: { left: 6, right: 6, top: 6, bottom: 40, containLabel: true },
+      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 8, interval: 3 },
         axisLine: { lineStyle: { color: 'rgba(124,58,237,0.3)' } } },
-      yAxis: { type: 'value', axisLabel: { color: '#94a3b8', fontSize: 9 },
+      yAxis: { type: 'value', axisLabel: { color: '#94a3b8', fontSize: 8 },
         splitLine: { lineStyle: { color: 'rgba(124,58,237,0.08)' } } },
       series: [
         { name: '1min',  type: 'line', data: res.data.map(d => d.load1_avg), smooth: true, lineStyle: { color: '#06b6d4', width: 2 }, symbol: 'none', areaStyle: { color: 'rgba(6,182,212,0.1)' } },

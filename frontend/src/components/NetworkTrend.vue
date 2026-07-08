@@ -17,16 +17,16 @@ async function load() {
     const xData = res.data.map(d => `${d.ts_hour}:00`)
     chart.setOption({
       tooltip: { trigger: 'axis' },
-      legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 10 },
+      legend: { bottom: -6, textStyle: { color: '#94a3b8', fontSize: 9 },
         data: ['入站(MB/s)', '出站(MB/s)', '入站数据包', '出站数据包'] },
-      grid: { left: 8, right: 8, top: 8, bottom: 28, containLabel: true },
-      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 9 },
+      grid: { left: 6, right: 6, top: 6, bottom: 40, containLabel: true },
+      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 8, interval: 3 },
         axisLine: { lineStyle: { color: 'rgba(124,58,237,0.3)' } } },
       yAxis: [
-        { type: 'value', name: 'MB/s', nameTextStyle: { color: '#94a3b8', fontSize: 9 },
-          axisLabel: { color: '#94a3b8', fontSize: 9 }, splitLine: { lineStyle: { color: 'rgba(124,58,237,0.08)' } } },
-        { type: 'value', name: 'pkt/s', nameTextStyle: { color: '#94a3b8', fontSize: 9 },
-          axisLabel: { color: '#94a3b8', fontSize: 9 }, splitLine: { show: false } }
+        { type: 'value', name: 'MB/s', nameTextStyle: { color: '#94a3b8', fontSize: 8 },
+          axisLabel: { color: '#94a3b8', fontSize: 8 }, splitLine: { lineStyle: { color: 'rgba(124,58,237,0.08)' } } },
+        { type: 'value', name: 'pkt/s', nameTextStyle: { color: '#94a3b8', fontSize: 8 },
+          axisLabel: { color: '#94a3b8', fontSize: 8 }, splitLine: { show: false } }
       ],
       series: [
         { name: '入站(MB/s)', type: 'line', data: res.data.map(d => d.net_in_avg), smooth: true, lineStyle: { color: '#10b981', width: 2 }, symbol: 'none', areaStyle: { color: 'rgba(16,185,129,0.1)' } },
