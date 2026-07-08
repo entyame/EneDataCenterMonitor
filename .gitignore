@@ -1,0 +1,23 @@
+# Docker volumes — 数据库文件不入库
+docker/mysql_data/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
