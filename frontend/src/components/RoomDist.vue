@@ -14,17 +14,19 @@ async function load() {
   try {
     const res = await fetchRooms()
     if (!res.success || !res.data.length) return
-    const data = res.data.map(r => ({
+    const raw = res.data.map(r => ({
       name: r.room.replace('机房', ''),
       value: r.host_count
     }))
+    // 按 A B C D E 顺序排列
+    const data = raw.sort((a, b) => a.name.localeCompare(b.name))
     chart.setOption({
       tooltip: { trigger: 'item', formatter: '{b}机房: {c} 台 ({d}%)' },
-      legend: { bottom: 2, textStyle: { color: '#94a3b8', fontSize: 10 } },
+      legend: { bottom: -10, textStyle: { color: '#94a3b8', fontSize: 9 } },
       series: [{
-        type: 'pie', radius: ['48%', '70%'], center: ['50%', '46%'],
+        type: 'pie', radius: ['40%', '60%'], center: ['50%', '43%'],
         data,
-        label: { color: '#e2e8f0', fontSize: 10, formatter: '{b}\n{d}%' },
+        label: { color: '#e2e8f0', fontSize: 9, formatter: '{d}%' },
         labelLine: { lineStyle: { color: 'rgba(124,58,237,0.3)' } },
         itemStyle: {
           borderRadius: 3,

@@ -19,8 +19,8 @@ async function load() {
       tooltip: { trigger: 'axis' },
       legend: { bottom: -6, textStyle: { color: '#94a3b8', fontSize: 9 },
         data: ['读取', '写入', '使用率', '延迟'] },
-      grid: { left: 6, right: 6, top: 6, bottom: 40, containLabel: true },
-      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 8, interval: 99 },
+      grid: { left: 6, right: 6, top: 6, bottom: 44, containLabel: true },
+      xAxis: { type: 'category', data: xData, axisLabel: { color: '#64748b', fontSize: 8, interval: 149 },
         axisLine: { lineStyle: { color: 'rgba(124,58,237,0.3)' } } },
       yAxis: [
         { type: 'value', name: '扇区/s', nameTextStyle: { color: '#94a3b8', fontSize: 8 },
