@@ -33,6 +33,6 @@ const formattedValue = computed(() => {
 .kpi-body {
   display: flex; align-items: center; gap: 14px; height: 100%;
 }
-.kpi-icon { font-size: 32px; flex-shrink: 0; }
-.kpi-info { display: flex; flex-direction: column; gap: 4px; }
+.kpi-icon { font-size: 26px; flex-shrink: 0; }
+.kpi-info { display: flex; flex-direction: column; gap: 2px; }
 </style>

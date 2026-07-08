@@ -15,52 +15,56 @@
       <div class="header-line right"></div>
     </header>
 
-    <!-- ===== KPI 卡片行 ===== -->
-    <section class="kpi-row">
-      <KpiCard v-for="card in kpiCards" :key="card.label"
-        :label="card.label" :value="card.value" :unit="card.unit"
-        :icon="card.icon" :color="card.color" />
-    </section>
+    <!-- ===== 主体：左栏 + 右区域 ===== -->
+    <main class="main-layout">
 
-    <!-- ===== 主体区域 ===== -->
-    <main class="main-grid">
-      <!-- 左侧列：CPU排名 -->
-      <div class="col-left">
+      <!-- ========== 左栏：排名 + 机房 ========== -->
+      <aside class="sidebar">
         <GlassPanel title="服务器 CPU 排名 TOP10">
           <CpuRank />
         </GlassPanel>
-      </div>
-
-      <!-- 中间列：CPU趋势 + 内存趋势 -->
-      <div class="col-center">
-        <GlassPanel title="CPU 使用率趋势 (24h)">
-          <CpuTrend />
-        </GlassPanel>
-        <GlassPanel title="内存使用趋势 (24h)">
-          <MemoryTrend />
-        </GlassPanel>
-      </div>
-
-      <!-- 右侧列：机房分布 -->
-      <div class="col-right">
         <GlassPanel title="机房服务器分布">
           <RoomDist />
         </GlassPanel>
-      </div>
-    </main>
+      </aside>
 
-    <!-- ===== 底部区域 ===== -->
-    <section class="bottom-row">
-      <GlassPanel title="网络流量趋势 (24h)">
-        <NetworkTrend />
-      </GlassPanel>
-      <GlassPanel title="磁盘 IO 趋势">
-        <DiskTrend />
-      </GlassPanel>
-      <GlassPanel title="系统负载趋势 (24h)">
-        <LoadTrend />
-      </GlassPanel>
-    </section>
+      <!-- ========== 右区域：KPI → 趋势图 ========== -->
+      <section class="content">
+
+        <!-- KPI 卡片行 -->
+        <div class="kpi-row">
+          <KpiCard v-for="card in kpiCards" :key="card.label"
+            :label="card.label" :value="card.value" :unit="card.unit"
+            :icon="card.icon" :color="card.color" />
+        </div>
+
+        <!-- 趋势图第一行：CPU 全宽 -->
+        <GlassPanel title="CPU 使用率趋势 (24h)" class="trend-full">
+          <CpuTrend />
+        </GlassPanel>
+
+        <!-- 趋势图第二行：内存 + 网络 并排 -->
+        <div class="trend-row">
+          <GlassPanel title="内存使用趋势 (24h)">
+            <MemoryTrend />
+          </GlassPanel>
+          <GlassPanel title="网络流量趋势 (24h)">
+            <NetworkTrend />
+          </GlassPanel>
+        </div>
+
+        <!-- 趋势图第三行：磁盘 + 负载 并排 -->
+        <div class="trend-row">
+          <GlassPanel title="磁盘 IO 趋势">
+            <DiskTrend />
+          </GlassPanel>
+          <GlassPanel title="系统负载趋势 (24h)">
+            <LoadTrend />
+          </GlassPanel>
+        </div>
+
+      </section>
+    </main>
 
     <!-- ===== 告警滚动条 ===== -->
     <footer class="alert-bar" v-if="alerts.length">
@@ -75,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import GlassPanel from './components/GlassPanel.vue'
 import KpiCard from './components/KpiCard.vue'
 import CpuRank from './components/CpuRank.vue'
@@ -157,7 +161,7 @@ function initParticles() {
       ctx.fillStyle = `rgba(124, 58, 237, ${p.alpha})`
       ctx.fill()
     })
-    // 连线相近粒子
+    // 连线
     particles.forEach((a, i) => {
       particles.slice(i + 1).forEach(b => {
         const d = Math.hypot(a.x - b.x, a.y - b.y)
@@ -181,8 +185,7 @@ onMounted(() => {
   setInterval(loadKpi, 30000)
   setInterval(loadAlerts, 30000)
   clockTimer = setInterval(() => {
-    const now = new Date()
-    currentTime.value = now.toLocaleString('zh-CN', { hour12: false })
+    currentTime.value = new Date().toLocaleString('zh-CN', { hour12: false })
   }, 1000)
   currentTime.value = new Date().toLocaleString('zh-CN', { hour12: false })
   initParticles()
@@ -198,8 +201,8 @@ onUnmounted(() => {
 .dashboard {
   width: 100vw; height: 100vh;
   display: flex; flex-direction: column;
-  padding: 8px 16px 6px;
-  gap: 6px;
+  padding: 6px 14px 4px;
+  gap: 5px;
   overflow: hidden;
   position: relative;
   z-index: 2;
@@ -208,7 +211,7 @@ onUnmounted(() => {
 /* ---- Header ---- */
 .header {
   display: flex; align-items: center;
-  height: 48px; flex-shrink: 0;
+  height: 42px; flex-shrink: 0;
   z-index: 3;
 }
 .header-line {
@@ -219,58 +222,69 @@ onUnmounted(() => {
   display: flex; align-items: center; gap: 12px;
   padding: 0 24px;
 }
-.header-icon { font-size: 20px; }
+.header-icon { font-size: 18px; }
 .header-content h1 {
-  font-size: 20px; font-weight: 700;
+  font-size: 18px; font-weight: 700;
   letter-spacing: 4px;
   background: linear-gradient(90deg, var(--accent-cyan), var(--primary), var(--accent-gold));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .header-sub {
-  font-size: 11px; color: var(--text-dim); letter-spacing: 2px;
+  font-size: 10px; color: var(--text-dim); letter-spacing: 2px;
 }
 .header-time {
-  margin-left: auto; font-size: 12px; color: var(--text-secondary);
+  margin-left: auto; font-size: 11px; color: var(--text-secondary);
   font-family: var(--font-mono);
+}
+
+/* ---- Main Layout: 左栏 + 右区域 ---- */
+.main-layout {
+  display: flex; gap: 8px;
+  flex: 1; min-height: 0;
+}
+
+/* ---- 左栏 ---- */
+.sidebar {
+  width: 260px; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar > * { flex: 1; min-height: 0; }
+
+/* ---- 右区域 ---- */
+.content {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 6px;
 }
 
 /* ---- KPI ---- */
 .kpi-row {
-  display: flex; gap: 10px;
-  height: 90px; flex-shrink: 0;
+  display: flex; gap: 8px;
+  height: 62px; flex-shrink: 0;
 }
 .kpi-row > * { flex: 1; }
 
-/* ---- Main Grid ---- */
-.main-grid {
-  display: grid;
-  grid-template-columns: 300px 1fr 280px;
-  gap: 8px;
-  flex: 1;
-  min-height: 0;
+/* ---- 趋势图全宽 ---- */
+.trend-full {
+  flex: 2.2; min-height: 0;
 }
-.col-left, .col-center, .col-right {
-  display: flex; flex-direction: column; gap: 8px;
-}
-.col-center > * { flex: 1; }
 
-/* ---- Bottom ---- */
-.bottom-row {
+/* ---- 趋势图双栏 ---- */
+.trend-row {
   display: flex; gap: 8px;
-  height: 190px; flex-shrink: 0;
+  flex: 1.8; min-height: 0;
 }
-.bottom-row > * { flex: 1; }
+.trend-row > * { flex: 1; min-width: 0; }
 
 /* ---- Alert Bar ---- */
 .alert-bar {
   display: flex; align-items: center; gap: 10px;
-  height: 26px; flex-shrink: 0;
+  height: 24px; flex-shrink: 0;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.25);
   border-radius: 4px;
   padding: 0 12px;
-  font-size: 11px;
+  font-size: 10px;
   z-index: 3;
   overflow: hidden;
 }

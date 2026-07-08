@@ -178,11 +178,12 @@ body::after {
 
 /* ---- 数值动画 ---- */
 .stat-value {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   font-family: var(--font-mono);
   color: #fff;
   text-shadow: 0 0 12px var(--primary-glow);
+  line-height: 1.1;
 }
 .stat-label {
   font-size: 11px;
